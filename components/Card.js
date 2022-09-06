@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 
-const WalletCard = () => {
+const Card = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [defaultAccount, setDefaultAccount] = useState(null);
   const [userBalance, setUserBalance] = useState(null);
@@ -45,7 +45,6 @@ const WalletCard = () => {
   };
 
   const chainChangedHandler = () => {
-    // reload the page to avoid any errors with chain change mid use of application
     window.location.reload();
   };
 
@@ -71,4 +70,4 @@ const WalletCard = () => {
   );
 };
 
-export default WalletCard;
+export default Card;

@@ -1,6 +1,5 @@
-import { Main } from 'next/document'
 import Head from 'next/head'
-import WalletCard from '../components/WalletCard'
+import Card from '../components/Card'
 
 export default function Home() {
   return (
@@ -12,8 +11,7 @@ export default function Home() {
       </Head>
 
     <div>
-      <Main />
-      <WalletCard />
+    <Card />
     </div>
       
     </div>
