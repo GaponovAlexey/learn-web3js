@@ -33,11 +33,11 @@ const WalletCard = () => {
     getAccountBalance(newAccount.toString());
   };
 
-  const getAccountBalance = (account: any) => {
+  const getAccountBalance = (account) => {
     window.ethereum
       .request({ method: "eth_getBalance", params: [account, "latest"] })
       .then((balance) => {
-        setUserBalance(ethers.utils.formatEther(balance)) as any
+        setUserBalance(ethers.utils.formatEther(balance))
       })
       .catch((error) => {
         setErrorMessage(error.message);
