@@ -49,9 +49,9 @@ const Card = () => {
   };
 
   // listen for account changes
-  window.ethereum.on("accountsChanged", accountChangedHandler);
+  // window.ethereum.on("accountsChanged", accountChangedHandler);
 
-  window.ethereum.on("chainChanged", chainChangedHandler);
+  // window.ethereum.on("chainChanged", chainChangedHandler);
 
   return (
     <div>
