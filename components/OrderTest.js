@@ -5,6 +5,8 @@ import { abiContract1 } from '../abi/assetContract1'
 import { p2pTrade } from '../abi/p2pTrade'
 import { p2pTradeOnChain } from '../abi/p2pTradeOnChain'
 import { createOrderOnServer } from './func/CreateOrder'
+import { writeContract } from './func/WriteContract/WriteContract'
+import { writeContractOnChain } from './func/WriteContract/writeContractOnChain'
 
 const OrderTest = () => {
   const connect_smart_contract = async () => {
@@ -16,9 +18,8 @@ const OrderTest = () => {
     const smartContractAsset0 = '0x4AC7c23dF4e957D4DBF8DEe195B705e24AFFE536'
     const smartContractAsset1 = '0x4a7d6546Ee53F129369fFf073c2b207174a1Ea35'
 
-    let userToken =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmRhZGFkZCIsImlhdCI6MTY2MjY0Nzc3MCwibmJmIjoxNjYyNjQ3NzcwLCJqdGkiOiI5ZDEyNmZhYy0zN2NmLTRmYzUtYjAxNC1kNzUyMmJjZTFhNjAiLCJleHAiOjE2NjI2NDg2NzAsInR5cGUiOiJhY2Nlc3MiLCJmcmVzaCI6ZmFsc2V9.jly6RpyAYsxtglftxgvwaAubYxGuFTIh3EbRoskB61g'
-    createOrderOnServer(userToken)
+    // let userToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmRhZGFkZCIsImlhdCI6MTY2MjY0Nzc3MCwibmJmIjoxNjYyNjQ3NzcwLCJqdGkiOiI5ZDEyNmZhYy0zN2NmLTRmYzUtYjAxNC1kNzUyMmJjZTFhNjAiLCJleHAiOjE2NjI2NDg2NzAsInR5cGUiOiJhY2Nlc3MiLCJmcmVzaCI6ZmFsc2V9.jly6RpyAYsxtglftxgvwaAubYxGuFTIh3EbRoskB61g'
+    // createOrderOnServer(userToken)
 
     // определяем тип предложения и спопособ оплаты
     let typeOfferContract
@@ -38,15 +39,17 @@ const OrderTest = () => {
     let contractUSDT = new w3.eth.Contract(asset, smartContractUSDT)
     let contractAsset0 = new w3.eth.Contract(abiContract0, smartContractAsset0)
     let contractAsset1 = new w3.eth.Contract(abiContract1, smartContractAsset1)
-    const accounts = await ethereum.request({ method: 'eth_accounts' })
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
     const gasPrice = await w3.eth.getGasPrice().then((result) => {
       return result
     })
 
-    let tokenOnChain = true
+    let tokenOnChain = false
     let cryptoOnChain = true
-    let offerType = "buy"
-   
+    let offerType = 'sel'
+    let TxHs
+    let tokenSell = 1
+
     if (tokenOnChain === true && cryptoOnChain === true) {
       console.log('Начался обмен он чейн')
       if (offerType == 'buy') {
@@ -64,7 +67,7 @@ const OrderTest = () => {
             console.log(error)
           })
           .then(function (receipt) {
-            console.log(receipt)
+            console.log('re', receipt)
             writeContractOnChain(
               contractP2PTradeOnChain,
               payCurrencyContract,

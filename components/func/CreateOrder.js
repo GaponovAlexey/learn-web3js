@@ -40,11 +40,12 @@ export const createOrderOnServer = (userToken) => {
     },
   })
     .then((response) => {
-      setAdv(response.data.id)
-      connect_server_contract(response.data.id)
+        console.log(response)
+        
+    //   setAdv(response.data.id)
+    //   connect_server_contract(response.data.id)
     })
     .catch((error) => {
       console.log('ERRRR:: ', error)
-      updateToken()
     })
 }
