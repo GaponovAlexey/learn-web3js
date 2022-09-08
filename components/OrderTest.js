@@ -1,9 +1,7 @@
 import Web3 from 'web3'
 import { asset } from '../abi/asset'
-import { abiContract0 } from '../abi/assetContract0'
-import { abiContract1 } from '../abi/assetContract1'
 import { p2pTrade } from '../abi/p2pTrade'
-import { p2pTradeOnChain } from '../abi/p2pTradeOnChain'
+import { CallContract } from './func/WriteContract/CallContract'
 import { writeContract } from './func/WriteContract/WriteContract'
 
 const OrderTest = () => {
@@ -54,9 +52,60 @@ const OrderTest = () => {
         }
       })
   }
+
+  const connect_Call_Contract = async () => {
+    console.log('call_contract')
+
+    const smartContractAddress = '0xE9178f76A7267d27A2ADceF667a967A92494453e'
+    let w3 = new Web3(window.ethereum)
+
+    let contractP2PTrade = new w3.eth.Contract(p2pTrade, smartContractAddress)
+    const accounts = await ethereum.request({ method: 'eth_accounts' });
+    const gasPrice = await w3.eth.getGasPrice().then(result => {return result});
+    //1
+    let right = 1
+    // contractP2PTrade.methods
+    // .confirmDealByOperator(1, right)
+    // // .send({ from: accounts[0], gasPrice: gasPrice * 5 })
+    // .on('TransactionHash' , function(hash) {
+    //     TxHs = hash;
+    //     console.log(hash)
+    // })
+    // .then(function(receipt){
+    //     console.log(receipt)
+    // })
+    // .catch(e => {
+    //     console.log(e)
+    // })
+    //2
+    await contractP2PTrade.methods
+      // .userInfo({0: 1})
+      .call()
+      .then(function (receipt) {
+        console.log('re', receipt)
+
+        // writeContract(
+        //   contractP2PTrade, // connect SmartCotract
+        //   gasPrice, // gas count
+        //   accounts, // MM account
+        //   typeOfferContract, // method SmartContract
+        //   payCurrencyContract, // token
+        //   minimumLimit, // mintoBuy
+        //   tokenSell, // amountAsset0
+        // )
+      })
+      .catch((error) => {
+        if (error.code === 4001) {
+          console.log('Please connect to MetaMask.')
+        } else {
+          console.error(error)
+        }
+      })
+  }
   return (
     <div>
-      <button onClick={connect_smart_contract}>connect_smart_contract</button>
+      {/* <button onClick={connect_smart_contract}>connect_smart_contract</button> */}
+      <button onClick={connect_Call_Contract}>connect_CallContractt</button>
     </div>
   )
 }
