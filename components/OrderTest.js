@@ -1,3 +1,11 @@
+import Web3 from 'web3'
+import { asset } from '../abi/asset'
+import { abiContract0 } from '../abi/assetContract0'
+import { abiContract1 } from '../abi/assetContract1'
+import { p2pTrade } from '../abi/p2pTrade'
+import { p2pTradeOnChain } from '../abi/p2pTradeOnChain'
+import { createOrderOnServer } from './func/CreateOrder'
+
 const OrderTest = () => {
   const connect_smart_contract = async () => {
     const smartContractAddress = '0xE9178f76A7267d27A2ADceF667a967A92494453e'
@@ -8,24 +16,17 @@ const OrderTest = () => {
     const smartContractAsset0 = '0x4AC7c23dF4e957D4DBF8DEe195B705e24AFFE536'
     const smartContractAsset1 = '0x4a7d6546Ee53F129369fFf073c2b207174a1Ea35'
 
-    let userToken = sessionStorage.getItem('access_token')
-      ? sessionStorage.getItem('access_token')
-      : localStorage.getItem('access_token')
+    let userToken =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmRhZGFkZCIsImlhdCI6MTY2MjY0Nzc3MCwibmJmIjoxNjYyNjQ3NzcwLCJqdGkiOiI5ZDEyNmZhYy0zN2NmLTRmYzUtYjAxNC1kNzUyMmJjZTFhNjAiLCJleHAiOjE2NjI2NDg2NzAsInR5cGUiOiJhY2Nlc3MiLCJmcmVzaCI6ZmFsc2V9.jly6RpyAYsxtglftxgvwaAubYxGuFTIh3EbRoskB61g'
     createOrderOnServer(userToken)
 
     // определяем тип предложения и спопособ оплаты
     let typeOfferContract
     let payCurrencyContract
-    if (payMethodCryptocurrency == 'Другая криптовалюта') {
-      typeOfferContract = 'crypto'
-      payCurrencyContract = crypto
-    } else {
-      typeOfferContract = 'all'
-      payCurrencyContract = fiat
-    }
+    typeOfferContract = 'crypto'
+    payCurrencyContract = crypto
 
-    console.log(crypto, payCurrencyContract)
-    let minimumLimit = minLimit
+    let minimumLimit = 1
 
     let w3 = new Web3(window.ethereum)
 
@@ -42,11 +43,10 @@ const OrderTest = () => {
       return result
     })
 
-    console.log(
-      tokenOnChain === true && cryptoOnChain === true,
-      tokenOnChain,
-      cryptoOnChain,
-    )
+    let tokenOnChain = true
+    let cryptoOnChain = true
+    let offerType = "buy"
+   
     if (tokenOnChain === true && cryptoOnChain === true) {
       console.log('Начался обмен он чейн')
       if (offerType == 'buy') {

@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Card from '../components/Card'
+import Card from '../components/RegisterMask/Card'
 import OrderTest from '../components/OrderTest'
 
 export default function Home() {
