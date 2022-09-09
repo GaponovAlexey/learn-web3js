@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const createOrderOnServer = (userToken) => {
+export const CreateOrder = (userToken) => {
   let typeOfferContract
   let payCurrencyContract
   let orderId
@@ -41,7 +41,6 @@ export const createOrderOnServer = (userToken) => {
   })
     .then((response) => {
         console.log(response)
-        
     //   setAdv(response.data.id)
     //   connect_server_contract(response.data.id)
     })

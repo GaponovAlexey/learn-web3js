@@ -60,39 +60,17 @@ const OrderTest = () => {
     let w3 = new Web3(window.ethereum)
 
     let contractP2PTrade = new w3.eth.Contract(p2pTrade, smartContractAddress)
-    const accounts = await ethereum.request({ method: 'eth_accounts' });
-    const gasPrice = await w3.eth.getGasPrice().then(result => {return result});
-    //1
-    let right = 1
-    // contractP2PTrade.methods
-    // .confirmDealByOperator(1, right)
-    // // .send({ from: accounts[0], gasPrice: gasPrice * 5 })
-    // .on('TransactionHash' , function(hash) {
-    //     TxHs = hash;
-    //     console.log(hash)
-    // })
-    // .then(function(receipt){
-    //     console.log(receipt)
-    // })
-    // .catch(e => {
-    //     console.log(e)
-    // })
-    //2
+    const accounts = await ethereum.request({ method: 'eth_accounts' })
+    const gasPrice = await w3.eth.getGasPrice().then((result) => {
+      return result
+    })
+    // const to = '0x6a4143A3038B0c264700a32aD5A1111F0CfADBfB'
+
     await contractP2PTrade.methods
-      // .userInfo({0: 1})
-      .call()
+      .orderInfo(0)
+      .call({ from: smartContractAddress})
       .then(function (receipt) {
         console.log('re', receipt)
-
-        // writeContract(
-        //   contractP2PTrade, // connect SmartCotract
-        //   gasPrice, // gas count
-        //   accounts, // MM account
-        //   typeOfferContract, // method SmartContract
-        //   payCurrencyContract, // token
-        //   minimumLimit, // mintoBuy
-        //   tokenSell, // amountAsset0
-        // )
       })
       .catch((error) => {
         if (error.code === 4001) {
@@ -104,7 +82,7 @@ const OrderTest = () => {
   }
   return (
     <div>
-      {/* <button onClick={connect_smart_contract}>connect_smart_contract</button> */}
+      <button onClick={connect_smart_contract}>connect_smart_contract</button>
       <button onClick={connect_Call_Contract}>connect_CallContractt</button>
     </div>
   )

@@ -1,3 +1,4 @@
+import { CreateOrder } from '../CreateOrder'
 let token = "BTC"
 
 export const writeContract = async (
@@ -10,7 +11,7 @@ export const writeContract = async (
   tokenSell, // amountAsset0
 ) => {
   await contractP2PTrade.methods
-    .createOrder(
+    .CreateOrder(
       typeOfferContract?.toUpperCase(), // method
       token.toUpperCase(), // Asset0
       payCurrencyContract?.toUpperCase(), // Asset1
@@ -26,12 +27,6 @@ export const writeContract = async (
       TxHs = hash
       console.log(hash)
       // writeContract(contractP2PTrade)
-    })
-    .on('receipt ', (receipt) => {
-      console.log('receipt ' + receipt)
-    })
-    .on('error', function (error) {
-      console.log(error)
     })
     .then(function (receipt) {
       console.log(123123)
