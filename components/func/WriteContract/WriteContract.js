@@ -1,5 +1,4 @@
-import { CreateOrder } from '../CreateOrder'
-let token = "BTC"
+let token = 'BTC'
 
 export const writeContract = async (
   contractP2PTrade, // connect SmartCotract
@@ -9,9 +8,10 @@ export const writeContract = async (
   payCurrencyContract, // token
   minLimit, // mintoBuy
   tokenSell, // amountAsset0
+  rate = 1,
 ) => {
   await contractP2PTrade.methods
-    .CreateOrder(
+    .createOrder(
       typeOfferContract?.toUpperCase(), // method
       token.toUpperCase(), // Asset0
       payCurrencyContract?.toUpperCase(), // Asset1
@@ -27,6 +27,12 @@ export const writeContract = async (
       TxHs = hash
       console.log(hash)
       // writeContract(contractP2PTrade)
+    })
+    .on('receipt ', (receipt) => {
+      console.log('receipt ' + receipt)
+    })
+    .on('error', function (error) {
+      console.log(error)
     })
     .then(function (receipt) {
       console.log(123123)
