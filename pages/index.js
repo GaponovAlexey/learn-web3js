@@ -12,7 +12,7 @@ export default function Home() {
       </Head>
 
       <Card />
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 30 }}>
+      <div className='flex justify-center t-[30px]'>
         <OrderTest />
       </div>
     </div>

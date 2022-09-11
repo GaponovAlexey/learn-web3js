@@ -51,11 +51,11 @@ const Card = () => {
   return (
     <div>
       <div className="walletCard">
-        <h4> {'Connection to MetaMask using window.ethereum methods'} </h4>
-        <button onClick={connectWalletHandler}>{connButtonText}</button>
-        <button onClick={chainChangedHandler}>{'Reload'}</button>
-        <div className="accountDisplay">
-          <h3>Address: {defaultAccount}</h3>
+        <h4 className='text-2xl' > {'Connection to MetaMask using window.ethereum methods'} </h4>
+        <button className='text-xl text-green-500 px-4' onClick={connectWalletHandler}>{connButtonText}</button>
+        <button className='text-xl text-red-500 px-4' onClick={chainChangedHandler}>{'Reload'}</button>
+        <div >
+          <h3 className='text-xl' >Address: {defaultAccount}</h3>
         </div>
         <div className="balanceDisplay">
           <h3>Balance: {userBalance}</h3>
