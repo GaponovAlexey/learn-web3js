@@ -1,42 +1,43 @@
 import { useState } from 'react'
+import Web3 from 'web3'
+import { p2pTrade } from '../../../abi/p2pTrade'
 
 const CreateOrderForm = () => {
-  const [method, setMethod] = useState('buy')
-  const [sell, setSell] = useState('')
-  const [buy, setBuy] = useState('')
-  const [minBS, setMinBS] = useState('')
-  const [rate0, setRate0] = useState('')
-  const [rate1, setRate1] = useState('')
-  const [Currensy, setCurrensy] = useState('')
-  const [usdrate, setUsdrate] = useState('')
-
+  const [method, setMethod] = useState('all') //method
+  const [sell, setSell] = useState('BTC') //asset0
+  const [buy, setBuy] = useState('BTC') //asset1
+  const [minBS, setMinBS] = useState(1) // minToBuy
+  const [rate0, setRate0] = useState(30000)
+  const [rate1, setRate1] = useState(200000)
+  const [Currensy, setCurrensy] = useState('USD')
+  const [ratioCurrensyToUSD, setratioCurrensyToUSD] = useState(1)
+  const [amountAsset, setamountAsset] = useState(1)
+  console.log(+`${ratioCurrensyToUSD}e18`)
   const CreateOrder = async () => {
-    console.log('sss')
+    console.log(+`${ratioCurrensyToUSD}e18`)
     const smartContractAddress = '0xE9178f76A7267d27A2ADceF667a967A92494453e'
     const smartContractUSDT = '0xC5DC2366997A1Db48ed0a909c12c778d717a1859'
 
     let w3 = new Web3(window.ethereum)
-    let contractUSDT = new w3.eth.Contract(asset, smartContractUSDT)
-    // const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+    let contractP2PTrade = new w3.eth.Contract(p2pTrade, smartContractAddress)    // const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
 
     const accounts = await w3.eth.getAccounts()
     const gasPrice = await w3.eth.getGasPrice().then((result) => {
       return result
     })
-    const token = 'USDT'
-    const payCurrencyContract = crypto
-    //ac
-    //methods
-    await contractUSDT.methods
-      .approve(smartContractAddress, BigInt(1e30))
+    await contractP2PTrade.methods
       .createOrder(
-        token,
-        payCurrencyContract,
-        BigInt(+`${1}e18`),
-        BigInt(+`${1}e18`),
-        BigInt(`${1}e18`),
+        method?.toUpperCase(), //method = all
+        sell?.toUpperCase(), //asset0 = "BTC"
+        buy?.toUpperCase(), //asset0 = "BTC"
+        BigInt(+`${minBS}e18`), // minToBuy = 1
+        BigInt(+`${rate0}e18`), //rate0 = 30000
+        BigInt(+`${rate1}e18`), //rate1 = 20000
+        Currensy?.toUpperCase(), // currency = 'USD'
+        BigInt(+`${ratioCurrensyToUSD}e18`), //ratioCurrensyToUSD = 1
+        BigInt(+`${amountAsset}e18`), //tokenSell - 1
       )
-      .send({ from: accounts[0], gasPrice: gasPrice * 5 })
+      .send({ from: accounts[0], gasPrice: gasPrice })
       .on('TransactionHash', function (hash) {
         console.log(hash)
       })
@@ -49,7 +50,11 @@ const CreateOrderForm = () => {
     <div className="bg-slate-400">
       <div className="inline flex-wrap">
         <div className="selorby">
-          <input value={method} placeholder="method sell or buy" />
+          <input
+            value={method}
+            onChange={(e) => setMethod(e.target.value)}
+            placeholder="method sell or buy"
+          />
         </div>
         <div className="what do you sell">
           <input
@@ -96,18 +101,20 @@ const CreateOrderForm = () => {
         </div>
         <div className="ratioCurrensyToUSD">
           <input
-            value={usdrate}
-            onChange={(e) => setUsdrate(e.target.value)}
+            value={ratioCurrensyToUSD}
+            onChange={(e) => setratioCurrensyToUSD(e.target.value)}
             placeholder="curse usd"
           />
         </div>
         <div className="amountAsset">
-          <input placeholder="amount your tokens" />
+          <input
+            value={amountAsset}
+            onChange={(e) => setamountAsset(e.target.value)}
+            placeholder="amount your tokens"
+          />
         </div>
       </div>
-      <div className="div" value={CreateOrder}>
-        send
-      </div>
+      <button onClick={CreateOrder}>Create Contract</button>
     </div>
   )
 }
