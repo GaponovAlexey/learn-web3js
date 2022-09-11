@@ -1,7 +1,8 @@
 import Web3 from 'web3'
 import { asset } from '../../../abi/asset'
 
-export const CreateOrder = async () => {
+export const CreateOrder = async ({method}) => {
+  
   const smartContractAddress = '0xE9178f76A7267d27A2ADceF667a967A92494453e'
   const smartContractUSDT = '0xC5DC2366997A1Db48ed0a909c12c778d717a1859'
 
@@ -33,8 +34,6 @@ export const CreateOrder = async () => {
     .then(function (receipt) {
       console.log(receipt)
     })
-
-  return <div>create</div>
 }
 // createOrder
 // Позволяет создать Order пользователю. Необходимо ввести:
