@@ -9,6 +9,7 @@ export const Owner = async () => {
   let w3 = new Web3(window.ethereum)
   let contractP2PTrade = new w3.eth.Contract(p2pTrade, smartContractAddress)
   
+
   await contractP2PTrade.methods
     .owner()
     .call()
