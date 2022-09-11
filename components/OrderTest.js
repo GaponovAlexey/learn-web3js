@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Web3 from 'web3'
 import { asset } from '../abi/asset'
 import { p2pTrade } from '../abi/p2pTrade'
-import { CallContract } from './func/WriteContract/CallContract'
 import { writeContract } from './func/WriteContract/WriteContract'
 
 const OrderTest = () => {
@@ -11,14 +10,11 @@ const OrderTest = () => {
   let minimumLimit = 1
   const smartContractAddress = '0xE9178f76A7267d27A2ADceF667a967A92494453e'
   const smartContractUSDT = '0xC5DC2366997A1Db48ed0a909c12c778d717a1859'
-const [datacontract, setDatacontract] = useState('')
+const [dataContract, setDataContract] = useState('')
 
   const connect_smart_contract = async () => {
   let w3 = new Web3(window.ethereum)
-  let contractP2PTrade = new w3.eth.Contract(p2pTrade, smartContractAddress)
   let contractUSDT = new w3.eth.Contract(asset, smartContractUSDT)
-
-
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
     const gasPrice = await w3.eth.getGasPrice().then((result) => {
       return result
@@ -31,17 +27,16 @@ const [datacontract, setDatacontract] = useState('')
       .approve(smartContractAddress, BigInt(1e30))
       .send({ from: accounts[0], gasPrice: gasPrice * 5 })
       .on('TransactionHash', function (hash) {
-        TxHs = hash
         console.log(hash)
       })
       .then(function (receipt) {
         writeContract(
-          contractP2PTrade, // connect SmartCotract
+          contractP2PTrade, // connect SmartContract
           gasPrice, // gas count
           accounts, // MM account
           typeOfferContract, // method SmartContract
           payCurrencyContract, // token
-          minimumLimit, // mintoBuy
+          minimumLimit, // minBuy
           tokenSell, // amountAsset0
         )
       })
@@ -61,10 +56,10 @@ const [datacontract, setDatacontract] = useState('')
     let contractP2PTrade = new w3.eth.Contract(p2pTrade, smartContractAddress)
 
     await contractP2PTrade.methods
-      .FeeRecipient()
+      .owner()
       .call()
       .then(function (receipt) {
-        setDatacontract(receipt)
+        setDataContract(receipt)
         console.log('re', receipt)
       })
       .catch((error) => {
@@ -80,7 +75,7 @@ const [datacontract, setDatacontract] = useState('')
       <button onClick={connect_smart_contract}>connect_smart_contract</button>
       <button onClick={connect_Call_Contract}>connect_CallContractt</button>
       <div style={{paddingTop: 20}}>
-      {datacontract}
+      {dataContract}
       </div>
     </div>
   )
