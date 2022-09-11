@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Card from '../components/RegisterMask/Card'
 import OrderTest from '../components/OrderTest'
+import Card from '../components/RegisterMask/Card'
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
       </Head>
 
       <Card />
-      <div className='flex justify-center t-[30px]'>
+      <div className=' t-[30px]'>
         <OrderTest />
       </div>
     </div>
