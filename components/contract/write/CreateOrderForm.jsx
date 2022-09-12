@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Web3 from 'web3'
 import { p2pTrade } from '../../../abi/p2pTrade'
+import { createOrderOnServer } from '../../func/SendServer/CreateOrderOnServer'
 
 const CreateOrderForm = () => {
   const [method, setMethod] = useState('ALL') //method
@@ -12,12 +13,27 @@ const CreateOrderForm = () => {
   const [Currensy, setCurrensy] = useState('USD')
   const [ratioCurrensyToUSD, setratioCurrensyToUSD] = useState(1)
   const [amountAsset, setamountAsset] = useState(1)
+
+  const CreateOrderSubmit = () => {
+    CreateOrder()
+    createOrderOnServer({
+      method: method?.toUpperCase(), //method
+      sell: sell?.toUpperCase(), //asset0 = "BTC"
+      buy: buy?.toUpperCase(), //asset0 = "BTC"
+      minToBuy: BigInt(+`${minBS}e18`), // minToBuy = 1
+      rate0: BigInt(+`${rate0}e18`), //rate0 = 30000
+      rate1: BigInt(+`${rate1}e18`), //rate1 = 20000
+      currency: Currensy?.toUpperCase(), // currency = 'USD'
+      ratioCurrensyToUSD: BigInt(+`${ratioCurrensyToUSD}e18`), //ratioCurrensyToUSD = 1
+      tokenSell: BigInt(+`${amountAsset}e18`), //tokenSell - 1
+    })
+  }
+
   const CreateOrder = async () => {
     const smartContractAddress = '0xE9178f76A7267d27A2ADceF667a967A92494453e'
-    const smartContractUSDT = '0xC5DC2366997A1Db48ed0a909c12c778d717a1859'
 
     let w3 = new Web3(window.ethereum)
-    let contractP2PTrade = new w3.eth.Contract(p2pTrade, smartContractAddress)    // const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+    let contractP2PTrade = new w3.eth.Contract(p2pTrade, smartContractAddress) // const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
 
     const accounts = await w3.eth.getAccounts()
     const gasPrice = await w3.eth.getGasPrice().then((result) => {
@@ -112,7 +128,7 @@ const CreateOrderForm = () => {
           />
         </div>
       </div>
-      <button onClick={CreateOrder}>Create Contract</button>
+      <button onClick={CreateOrderSubmit}>Create Contract</button>
     </div>
   )
 }
