@@ -4,7 +4,7 @@ import { p2pTrade } from '../../../abi/p2pTrade'
 import { createOrderOnServer } from '../../func/SendServer/CreateOrderOnServer'
 
 const CreateOrderForm = () => {
-  const [method, setMethod] = useState('ALL') //method
+  const [method, setMethod] = useState('CRYPTO') //method
   const [sell, setSell] = useState('BTC') //asset0
   const [buy, setBuy] = useState('BTC') //asset1
   const [minBS, setMinBS] = useState(1) // minToBuy
@@ -15,17 +15,17 @@ const CreateOrderForm = () => {
   const [amountAsset, setamountAsset] = useState(1)
 
   const CreateOrderSubmit = () => {
-    CreateOrder()
+    // CreateOrder()
     createOrderOnServer({
       method: method?.toUpperCase(), //method
       sell: sell?.toUpperCase(), //asset0 = "BTC"
       buy: buy?.toUpperCase(), //asset0 = "BTC"
-      minToBuy: BigInt(+`${minBS}e18`), // minToBuy = 1
-      rate0: BigInt(+`${rate0}e18`), //rate0 = 30000
-      rate1: BigInt(+`${rate1}e18`), //rate1 = 20000
+      minToBuy: minBS, // minToBuy = 1
+      rate0: rate0, //rate0 = 30000
+      rate1: rate1, //rate1 = 20000
       currency: Currensy?.toUpperCase(), // currency = 'USD'
-      ratioCurrensyToUSD: BigInt(+`${ratioCurrensyToUSD}e18`), //ratioCurrensyToUSD = 1
-      tokenSell: BigInt(+`${amountAsset}e18`), //tokenSell - 1
+      ratioCurrensyToUSD: ratioCurrensyToUSD, //ratioCurrensyToUSD = 1
+      tokenSell: amountAsset, //tokenSell - 1
     })
   }
 

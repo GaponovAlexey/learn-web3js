@@ -1,4 +1,4 @@
-const { default: axios } = require('axios')
+const axios = require('axios').default;
 
 export const createOrderOnServer = ({
   method, //method
@@ -11,32 +11,19 @@ export const createOrderOnServer = ({
   ratioCurrensyToUSD,
   tokenSell,
 }) => {
-  let userToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmRhZGFkZCIsImlhdCI6MTY2Mjk4OTAzMywibmJmIjoxNjYyOTg5MDMzLCJqdGkiOiJmOWFiNjE5OC0wMzU3LTRmNGEtOGFhYy1iMGM0MWYyYThiYzIiLCJleHAiOjE2NjI5ODk5MzMsInR5cGUiOiJhY2Nlc3MiLCJmcmVzaCI6ZmFsc2V9.hs6TfFoZgqF1VtXO2kbPXwuujLssDIkCqFQ-ie-P0pA'
-   
-  // let typeOfferContract
-  // let payCurrencyContract
+  let userToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmRhZGFkZCIsImlhdCI6MTY2Mjk5MDY0MywibmJmIjoxNjYyOTkwNjQzLCJqdGkiOiJkMDQ4MGQyMi0wZDg4LTQ3MWQtODA5NC1mMWEzYWExYWVmYWMiLCJleHAiOjE2NjI5OTE1NDMsInR5cGUiOiJhY2Nlc3MiLCJmcmVzaCI6ZmFsc2V9.Jzm6AA0AlgMwEgvw7eVT99u_WX_Ig-FcDQ-r7CK_CiE'
   let orderId = 2147483647
   let contract_type = 'p2p_simple'
-  // if (modalPaymentMethod == 'MetaMask') {
-  //   orderId = 2147483647
-  // } else {
-  //   orderId = null
-  // }
-
-  // if (tokenOnChain === true && cryptoOnChain === true) {
-  //   contract_type = 'p2p_onchain'
-  // } else {
-  //   contract_type = 'p2p_simple'
-  // }
-
-  // if (payMethodCryptocurrency == 'Другая криптовалюта') {
-  //   typeOfferContract = 'crypto'
-  //   payCurrencyContract = crypto
-  // } else {
-  //   typeOfferContract = 'all'
-  //   payCurrencyContract = fiat
-  // }
-
+  console.log('method',method)
+  console.log('sell',sell)
+  console.log('buy',buy)
+  console.log('minToBuy',minToBuy)
+  console.log('rate0',rate0)
+  console.log('rate1',rate1)
+  console.log('currency',currency)
+  console.log('ratioCurrensyToUSD',ratioCurrensyToUSD)
+  console.log('tokenSell',tokenSell)
+  
   axios({
     method: 'post',
     response: 'json',
